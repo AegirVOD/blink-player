@@ -8,7 +8,13 @@
         <e p="Program.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="blink-player.csproj" t="IncludeRecursive" />
-        <e p="obj" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net48" t="Include">
+              <e p="blink-player.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
       </e>
       <e p="blink-player.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />
