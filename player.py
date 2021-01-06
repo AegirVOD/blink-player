@@ -1,15 +1,17 @@
-import pygame
+import os
+import pty
+import subprocess
+import time
 
-def play(filename):
-    print("Trying to play ", filename)
+class Player(object):
+
+    def __init__(self, filename):
+        
+
+    def play():
 
 
-def pause():
 
 
-def unpause():
-
-
-def stop():
 
 
