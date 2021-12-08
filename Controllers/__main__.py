@@ -1,8 +1,5 @@
-import search
-import cache
-from player import Player
-import display
-import playlist
+from Models import cache, search, display
+from Models.player import Player
 import time
 
 
