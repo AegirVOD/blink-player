@@ -10,17 +10,15 @@ result = search.by_keyword(keyword)
 search_results = parse_result(result)
 display.show_result(search_results)
 target_number = int(input('Which video would you like?\n'))
-#target_videoId = result['result'][target_number - 1]['id']
-#cache.download(target_videoId)
 
-#filename = target_videoId + '.mp3'
+url = search_results[target_number - 1].get_playable_url()
 
-#filename = '1.mp3'
-
-player = vlc.MediaPlayer(search_results[target_number - 1].get_url())
-
+instance = vlc.Instance()
+player = instance.media_player_new()
+Media = instance.media_new(url)
+Media.get_mrl()
+player.set_media(Media)
 player.play()
-#player.run_mpg123()
-#player.play_file()
-#time.sleep(3)
-#player.pause()
+time.sleep(10)
+duration = player.get_length() / 1000
+time.sleep(duration)
