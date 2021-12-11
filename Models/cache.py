@@ -1,4 +1,6 @@
+# deprecated
 import youtube_dl
+
 
 def download(target_videoId):
     target_link = "https://www.youtube.com/watch?v=" + target_videoId

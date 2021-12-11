@@ -13,12 +13,8 @@ target_number = int(input('Which video would you like?\n'))
 
 url = search_results[target_number - 1].get_playable_url()
 
-instance = vlc.Instance()
-player = instance.media_player_new()
-Media = instance.media_new(url)
-Media.get_mrl()
-player.set_media(Media)
+player = Player()
+player.load_url(url)
 player.play()
-time.sleep(10)
-duration = player.get_length() / 1000
-time.sleep(duration)
+time.sleep(20)
+player.pause()
