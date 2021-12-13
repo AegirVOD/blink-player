@@ -89,3 +89,6 @@ class PlayerUI(object):
         full_title = self.title + " - " + self.artist
         self.panel.addstr(1, int((self.width - len(full_title)) / 2), full_title)
 
+class MenuUI(object):
+    def __init__(self, begin_y, begin_x, end_y, end_x):
+        #Set basic parameters

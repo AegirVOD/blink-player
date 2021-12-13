@@ -2,7 +2,7 @@ import curses
 import time
 from curses import wrapper
 
-import PlayerUI
+import UI
 
 """
 keyword = input('What do you wanna search?\n')
@@ -19,11 +19,13 @@ player.play()
 time.sleep(20)
 player.pause()
 """
+
+
 def main(self):
     curses.noecho()
     curses.cbreak()
     curses.curs_set(False)
-    player_ui = PlayerUI.PlayerUI(3, 3, 10, 100)
+    player_ui = UI.PlayerUI(3, 3, 10, 100)
     player_ui.set_artist("Slipknot")
     player_ui.set_title("Psychosocial")
     player_ui.update_full_title()
@@ -31,4 +33,6 @@ def main(self):
     for i in range(0, 500):
         player_ui.update_current_time(i)
         time.sleep(1)
+
+
 wrapper(main)
