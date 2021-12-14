@@ -6,7 +6,20 @@ from time import gmtime
 from curses import wrapper
 
 
-class PlayerUI(object):
+class BasicPanel(object):
+    def __init__(self, begin_y, begin_x, end_y, end_x):
+        # Set basic parameters
+        self.begin_y = begin_y
+        self.begin_x = begin_x
+        self.end_y = end_y
+        self.end_x = end_x
+        self.height = end_y - begin_y
+        self.width = end_x - begin_x
+        # Create new panel for panel
+        self.panel = curses.newwin(self.height, self.width, self.begin_y, self.begin_x)
+
+
+class PlayerUI(BasicPanel):
 
     # The player looks like something like this:
     #
@@ -17,18 +30,12 @@ class PlayerUI(object):
 
     def __init__(self, begin_y, begin_x, end_y, end_x):
         # Set basic parameters
-        self.begin_y = begin_y
-        self.begin_x = begin_x
-        self.end_y = end_y
-        self.end_x = end_x
-        self.height = end_y - begin_y
-        self.width = end_x - begin_x
+        super(PlayerUI, self).__init__(begin_y, begin_x, end_y, end_x)
         self.current_time = 0  # Length that has already been played, in second
         self.total_time = 42  # Length of the song, in second
         self.title = "Title"
         self.artist = "Artist"
-        # Create new panel for player
-        self.panel = curses.newwin(self.height, self.width, self.begin_y, self.begin_x)
+
         # self.panel = curses.initscr()
         # self.panel.keypad(True)
         # Start to draw player
@@ -89,6 +96,34 @@ class PlayerUI(object):
         full_title = self.title + " - " + self.artist
         self.panel.addstr(1, int((self.width - len(full_title)) / 2), full_title)
 
-class MenuUI(object):
+
+class MenuUI(BasicPanel):
+    # For now, we don't consider the list of items that is too long...
+    # The menu looks like something like this:
+    # 1. First Line
+    # 2. Second Line which is selected (with highlight color)
+    # 3. Third Line
+    # [Fourth Line but invisible since there're only 3 lines fo data]
+    # [Fifth Line but invisible]
+    # ...
+    # [Last Line but invisible]
     def __init__(self, begin_y, begin_x, end_y, end_x):
-        #Set basic parameters
+        super(MenuUI, self).__init__(begin_y, begin_x, end_y, end_x)
+        self.row_number = 0
+
+    def update_items_result(self, item_list):
+        self.panel.erase()
+        i = 1
+        for line in item_list:
+            temp = line.title
+            if len(temp) > self.width - 5:
+                temp = temp[0:self.width - 15] + "..."
+            self.panel.addstr(i, 1, temp)
+            i = i + 1
+        self.panel.refresh()
+
+    # TODO: Fix this!
+    def highlight_item(self, col_number):
+        self.panel.attron(curses.A_REVERSE)
+        self.panel.redrawln(col_number, 1)
+        self.panel.attroff(curses.A_REVERSE)
