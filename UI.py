@@ -109,15 +109,15 @@ class MenuUI(BasicPanel):
     # [Last Line but invisible]
     def __init__(self, begin_y, begin_x, end_y, end_x):
         super(MenuUI, self).__init__(begin_y, begin_x, end_y, end_x)
+        self.item_list = None
         self.row_number = 0
 
     def update_items_result(self, item_list):
+        self.item_list = item_list
         self.panel.erase()
         i = 1
         for line in item_list:
-            temp = line.title
-            if len(temp) > self.width - 5:
-                temp = temp[0:self.width - 15] + "..."
+            temp = self.treat_oversize_item(line.title)
             self.panel.addstr(i, 1, temp)
             i = i + 1
         self.panel.refresh()
@@ -125,5 +125,13 @@ class MenuUI(BasicPanel):
     # TODO: Fix this!
     def highlight_item(self, col_number):
         self.panel.attron(curses.A_REVERSE)
-        self.panel.redrawln(col_number, 1)
+        # self.panel.redrawln(col_number, 1)
+        self.panel.addstr(col_number, 1, self.treat_oversize_item(self.item_list[col_number - 1].title))
         self.panel.attroff(curses.A_REVERSE)
+        self.panel.refresh()
+
+    def treat_oversize_item(self, target):
+        if len(target) > self.width - 15:
+            return target[0:self.width - 15] + "..."
+        else:
+            return target
